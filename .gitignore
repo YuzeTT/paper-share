@@ -1,0 +1,7 @@
+# Frontend asset
+web/dist
+
+# build folder
+build
+
+.DS_Store
