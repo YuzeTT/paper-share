@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.36.0
-  '@iconify-json/carbon': ^1.1.16
+  '@iconify-json/ri': ^1.1.5
   '@types/marked': ^4.0.8
   '@types/node': ^18.14.6
   '@unocss/preset-typography': ^0.50.4
@@ -40,7 +40,7 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config': 0.36.0_ycpbpc6yetojsgtrx3mwntkhsu
-  '@iconify-json/carbon': 1.1.16
+  '@iconify-json/ri': 1.1.5
   '@types/marked': 4.0.8
   '@types/node': 18.14.6
   '@unocss/preset-typography': 0.50.4
@@ -656,8 +656,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iconify-json/carbon/1.1.16:
-    resolution: {integrity: sha512-AD8bcnRSGA0WfcGEass2FbA0sagrUzrpFx5WchuDy3uf7yKBWumdypdQK121DH321fQDl5+zZQ26T6gC9knwUQ==}
+  /@iconify-json/ri/1.1.5:
+    resolution: {integrity: sha512-OrxKcKFHanTSPmU5esvSn5YfpNgjwJJ+6rkK1I1pIRCPXfuvmlTJGUjf+L5ZQHUiMWLQz+M2bqXx8iBUtW35Gg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
