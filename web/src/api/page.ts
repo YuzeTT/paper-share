@@ -1,20 +1,27 @@
 import axios from 'axios'
-import type { PagesResponse } from '~/interface/page.interface'
+import type { Page } from '~/types/page.interface'
 
-const getPages = async (): Promise<PagesResponse> => {
-  const res: PagesResponse = await axios
-    .get('http://localhost:3000/api/pages')
+const getPage = async (id_: string): Promise<Page> => {
+  const res: Page = await axios
+    .get('http://localhost:3000/api/page', { params: { id: id_ } })
     .then((res) => {
-      return res.data as PagesResponse
+      return res.data
     })
     .catch((err) => {
       console.error(err)
-      return err.response
-        ? err.response.data
-        : { message: 'server error' }
+      return {
+        id: '404',
+        title: '404 - 未找到页面',
+        content: '',
+        file_list: '{}',
+        author: '系统',
+        author_ip: '0',
+        created_ts: 0,
+        updated_ts: 0,
+      }
     })
 
   return res
 }
 
-export default getPages
+export default getPage

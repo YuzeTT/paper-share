@@ -1,20 +1,18 @@
 <script setup lang="ts" generic="T extends any, O extends any">
-import getPages from '~/api/page'
-import type { PagesResponse } from '~/interface/page.interface'
+import getPages from '~/api/page_list'
+import type { Page } from '~/types/page.interface'
 
 defineOptions({
   name: 'IndexPage',
 })
 
-let pages = $ref<PagesResponse>()
+let pages = $ref<Page[] | null>()
 
 // axios.get('http://localhost:3000/api/pages').then(data => {
 //   pages = data
 // })
 onMounted(async () => {
-  const res: PagesResponse = await getPages()
-  if (res.message !== 'server error')
-    pages = res
+  pages = await getPages()
 })
 </script>
 
@@ -22,9 +20,6 @@ onMounted(async () => {
   <div>
     <div v-if="!pages">
       loading
-    </div>
-    <div v-else-if="pages.message === 'server error'">
-      boom!
     </div>
     <div v-else>
       <div v-for="(item, i) in pages" :key="i">

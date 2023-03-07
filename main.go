@@ -16,8 +16,8 @@ type Page struct {
 	FileList  string `json:"file_list"`
 	Author    string `json:"author"`
 	AuthorIP  string `json:"author_ip"`
-	CreatedTS string `json:"created_ts"`
-	UpdatedTS string `json:"updated_ts"`
+	CreatedTS int    `json:"created_ts"`
+	UpdatedTS int    `json:"updated_ts"`
 }
 
 func Cors() gin.HandlerFunc {
@@ -85,6 +85,19 @@ func main() {
 		}
 
 		ctx.JSON(http.StatusOK, pages)
+	})
+
+	api.GET("/page", func(ctx *gin.Context) {
+		id := ctx.Query("id")
+		var page Page
+
+		err := db.QueryRow("SELECT * FROM pages WHERE id = ?", id).Scan(&page.ID, &page.Title, &page.Content, &page.FileList, &page.Author, &page.AuthorIP, &page.CreatedTS, &page.UpdatedTS)
+		if err != nil {
+			ctx.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, page)
 	})
 
 	log.Println("[√] HTTP服务已启动")
