@@ -30,10 +30,10 @@ onMounted(async () => {
       <div v-else pt-6>
         <article text-base prose prose-coolgray dark:prose-white>
           <h1 text-3xl font-bold mb-0>
-            {{ page.title }}
+            {{ page.title || '无标题' }}
           </h1>
           <p text-md mt-1 text-coolgray>
-            {{ page.author }} {{ datetime }}
+            {{ datetime }} | {{ page.author || '匿名' }}
           </p>
           <div v-html="content" />
         </article>

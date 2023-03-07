@@ -8,3 +8,7 @@ export interface Page {
   updated_ts: number
   created_ts: number
 }
+
+export interface Post {
+  msg: string
+}

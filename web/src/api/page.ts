@@ -1,9 +1,9 @@
 import axios from 'axios'
 import type { Page } from '~/types/page.interface'
 
-const getPage = async (id_: string): Promise<Page> => {
+const getPage = async (id: string): Promise<Page> => {
   const res: Page = await axios
-    .get('http://localhost:3000/api/page', { params: { id: id_ } })
+    .get('http://localhost:3000/api/page', { params: { id } })
     .then((res) => {
       return res.data
     })
