@@ -1,46 +1,35 @@
 <script setup lang="ts" generic="T extends any, O extends any">
+import getPages from '~/api/page'
+import type { PagesResponse } from '~/interface/page.interface'
+
 defineOptions({
   name: 'IndexPage',
 })
 
-const name = $ref('')
+let pages = $ref<PagesResponse>()
 
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
+// axios.get('http://localhost:3000/api/pages').then(data => {
+//   pages = data
+// })
+onMounted(async () => {
+  const res: PagesResponse = await getPages()
+  if (res.message !== 'server error')
+    pages = res
+})
 </script>
 
 <template>
   <div>
-    <div i-carbon-campsite text-4xl inline-block />
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
-        Vitesse Lite
-      </a>
-    </p>
-    <p>
-      <em text-sm op75>Opinionated Vite Starter Template</em>
-    </p>
-
-    <div py-4 />
-
-    <TheInput
-      v-model="name"
-      placeholder="What's your name?"
-      autocomplete="false"
-      @keydown.enter="go"
-    />
-
-    <div>
-      <button
-        class="m-3 text-sm btn"
-        :disabled="!name"
-        @click="go"
-      >
-        Go
-      </button>
+    <div v-if="!pages">
+      loading
+    </div>
+    <div v-else-if="pages.message === 'server error'">
+      boom!
+    </div>
+    <div v-else>
+      <div v-for="(item, i) in pages" :key="i">
+        {{ item }}
+      </div>
     </div>
   </div>
 </template>

@@ -20,6 +20,21 @@ type Page struct {
 	UpdatedTS string `json:"updated_ts"`
 }
 
+func Cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+			return
+		}
+
+		c.Next()
+	}
+}
+
 func main() {
 	log.Println("[-] 程序开始初始化...")
 	db, err := sql.Open("sqlite3", "data.db")
@@ -47,6 +62,7 @@ func main() {
 	router := gin.Default()
 	// gin.SetMode(gin.DebugMode)
 	gin.SetMode(gin.ReleaseMode)
+	router.Use(Cors())
 
 	api := router.Group("/api")
 
