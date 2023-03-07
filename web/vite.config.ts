@@ -10,10 +10,25 @@ import Unocss from 'unocss/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 // import Markdown from 'vite-plugin-vue-markdown'
 
+const devProxyServer = 'http://localhost:3000/'
+
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
+  build: {
+    assetsDir: 'static',
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 3001,
+    proxy: {
+      '^/api': {
+        target: devProxyServer,
+        changeOrigin: true,
+      },
     },
   },
   plugins: [

@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"embed"
+	"io/fs"
 	"log"
 	"net/http"
 	"time"
@@ -27,6 +29,9 @@ type Post struct {
 	Author  string `json:"author"`
 	Content string `json:"content"`
 }
+
+//go:embed web/dist
+var dist embed.FS
 
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -68,6 +73,12 @@ func main() {
 
 	api := router.Group("/api")
 
+	distFS, _ := fs.Sub(dist, "dist")
+	router.StaticFS("/static", http.FS(distFS))
+
+	router.NoRoute(func(c *gin.Context) {
+		c.FileFromFS("index.html", http.FS(dist))
+	})
 	api.GET("/pages", func(ctx *gin.Context) {
 		rows, err := db.Query("SELECT * FROM pages order by created_ts desc")
 		if err != nil {
@@ -131,5 +142,5 @@ func main() {
 	})
 
 	log.Println("[√] HTTP服务已启动")
-	router.Run("127.0.0.1:3000")
+	router.Run("localhost:3000")
 }
